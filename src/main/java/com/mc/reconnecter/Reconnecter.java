@@ -8,6 +8,7 @@ import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
+import com.velocitypowered.api.command.CommandManager;
 import org.slf4j.Logger;
 
 import java.io.BufferedReader;
@@ -37,6 +38,11 @@ public class Reconnecter {
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent event) {
         logger.info("Reconnecter plugin has been initialized!");
+        CommandManager commandManager = proxyServer.getCommandManager();
+        commandManager.register(
+                commandManager.metaBuilder("vlist").build(),
+                new VListCommand(proxyServer)
+        );
     }
 
     @Subscribe
